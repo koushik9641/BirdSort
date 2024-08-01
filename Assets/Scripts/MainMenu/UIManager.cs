@@ -29,7 +29,6 @@ namespace MainMenu
 
             //Advertisements.Instance.Initialize();
             //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
-            AdsManager.Instance.ShowBanner();
 
         }
 

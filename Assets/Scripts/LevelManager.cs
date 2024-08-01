@@ -59,13 +59,6 @@ public class LevelManager : MonoBehaviour
         brunchadded=0;
         LoadLevel();
         CurrentState = State.Playing;
-
-        //Advertisements.Instance.Initialize();
-        //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
-        //if(!Advertisements.Instance.IsBannerOnScreen())
-        //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
-
-        AdsManager.Instance.ShowBanner();
     }
 
     private void LoadLevel()
@@ -94,9 +87,6 @@ public class LevelManager : MonoBehaviour
                 var birdsinbrnch = levelColumn.ToList();
 
             brunchlist.Add(brunch);
-            
-
-            
 
             for(var j=0;j<birdsinbrnch.Count;j++){
                 for(var k=0;k<birdsinbrnch[j].value;k++){

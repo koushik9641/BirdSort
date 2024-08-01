@@ -15,10 +15,9 @@ namespace MainMenu
         {
 
             if (ResourceManager.GetCompletedLevel(GameMode.All) > 10)
-                CrossPromo.Instance.AutoShowPopupWhenReady();
+            {
 
-
-            RateGame.Instance.ShowRatePopup();
+            }
 
         }
 
@@ -55,29 +54,14 @@ namespace MainMenu
                 Application.OpenURL(iosstoreurl);
 
             }
-
-
-
-
-
         }
 
 
         public void OpenGameUrl()
         {
-
-           
-
-
             Application.OpenURL(Application.platform == RuntimePlatform.IPhonePlayer ? $"http://itunes.apple.com/app/id{GameSettings.Default.IosAppId}" :
              $"market://details?id={Application.identifier}"
              );
-
-
-
-
-
         }
-
     }
 }

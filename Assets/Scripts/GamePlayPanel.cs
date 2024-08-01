@@ -13,7 +13,7 @@ public class GamePlayPanel : ShowHidable
 
     private void Start()
     {
-        _lvlTxt.text = $" LEVEL\n {LevelManager.Instance.Level.no}";
+        _lvlTxt.text = $" LEVEL  {LevelManager.Instance.Level.no}";
 
         if(LevelManager.Instance.Level.no == 1)
         {
@@ -41,7 +41,7 @@ public class GamePlayPanel : ShowHidable
             if(!success)
                 return;
 
-            AdsManager.Instance.onRewarded3Pressed();
+            //AdsManager.Instance.onRewarded3Pressed();
           
         });
         
@@ -70,7 +70,7 @@ public class GamePlayPanel : ShowHidable
             if(!success)
                 return;
 
-            AdsManager.Instance.onRewarded1Pressed();
+            //dsManager.Instance.onRewarded1Pressed();
           
         });
         
@@ -104,7 +104,7 @@ public class GamePlayPanel : ShowHidable
             if(!success)
                 return;
 
-            AdsManager.Instance.onRewarded2Pressed();
+            //AdsManager.Instance.onRewarded2Pressed();
           
         });
     }

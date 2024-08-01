@@ -76,7 +76,6 @@ public class PausePanel : ShowHidable
     public void OnClickRemoveAds()
     {
         Debug.Log("Remove Ads");
-        ResourceManager.Instance.purchaseremovead();
         
 #if IN_APP
         

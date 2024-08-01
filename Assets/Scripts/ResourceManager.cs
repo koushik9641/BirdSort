@@ -36,81 +36,8 @@ public partial class ResourceManager : Singleton<ResourceManager>
     {
         base.OnInit();
         InitLevels();
-      if (!IAPManager.Instance.IsInitialized())
-            {
-                IAPManager.Instance.InitializeIAPManager(InitializeResult);
-            }
     }
 
-
-
-private void InitializeResult(IAPOperationStatus status, string message, List<StoreProduct>
-shopProducts)
-{
-if (status == IAPOperationStatus.Success)
- {
- //IAP was successfully initialized
-//loop through all products
- for (int i = 0; i < shopProducts.Count; i++)
- {
- 
-
- if (shopProducts[i].productName == "removead")
- {
-//if active variable is true, means that user had bought that product
-//so enable access
- if (shopProducts[i].active)
- {
- removead();
- }
-}
-
-
-}
-}
-else
-{
-Debug.Log("Error occurred "+ message);
-}
-}
-
-
-void removead(){
-        Advertisements.Instance.RemoveAds(true);
-        EnableAds = false;
-    }
-
-
-public void purchaseremovead(){
-    if (!EnableAds)
-        {
-            return;
-        }
-    IAPManager.Instance.BuyProduct(ShopProductNames.removead, ProductBoughtCallback);
-}
-
-
-public void ProductBoughtCallback(IAPOperationStatus status, string message, StoreProduct
-product)
-{
-if (status == IAPOperationStatus.Success)
- {
- //each consumable gives coins in this example
-
- 
- if (product.productName == "removead")
- removead();
-
-
-
-
-
- }else
- {
- //an error occurred in the buy process, log the message for more details
- Debug.Log("Buy product failed: " + message);
-}
-}
 
 #if IN_APP
 

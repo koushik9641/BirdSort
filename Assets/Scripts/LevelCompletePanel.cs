@@ -26,11 +26,11 @@ public class LevelCompletePanel : ShowHidable
 
         if (LevelManager.Instance.Level.no % 2 == 0 && LevelManager.Instance.Level.no > 5 && LevelManager.Instance.Level.no < 100)
         {
-            AdsManager.ShowInterstitial();
+            //AdsManager.ShowInterstitial();
         }
         else if (LevelManager.Instance.Level.no > 100)
         {
-            AdsManager.ShowInterstitial();
+            //AdsManager.ShowInterstitial();
 
         }
     }

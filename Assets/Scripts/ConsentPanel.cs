@@ -17,14 +17,7 @@ public class ConsentPanel : ShowHidable
 
 
     public void OnClickYes()
-    {
-        AdsManager.ConsentActive = true;
-        Advertisements.Instance.SetUserConsent(true);
-        
-        //AdsManager.Instance.Init();
-        //Advertisements.Instance.SetUserConsent(true);               
-        Advertisements.Instance.Initialize();
-        
+    {       
         Hide();
     }
 
@@ -35,11 +28,6 @@ public class ConsentPanel : ShowHidable
 
     public void OnClickNo()
     {
-        AdsManager.ConsentActive = false;
-        Advertisements.Instance.SetUserConsent(false);
-        //Advertisements.Instance.SetUserConsent(false);
-        Advertisements.Instance.Initialize();
-        
         Hide();
     }
 }

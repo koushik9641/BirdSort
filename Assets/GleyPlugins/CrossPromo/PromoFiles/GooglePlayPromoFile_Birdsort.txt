@@ -1,1 +1,0 @@
-{"gameName":"Funtoos Fish Sort Pro","storeLink":"https://play.google.com/store/apps/details?id=com.rangit1987.FuntoosFishSortPro","imageUrls":["https://static.wixstatic.com/media/3f0894_6b3073e81ca3446f8aafeb3499f73aaa~mv2.png"]}
