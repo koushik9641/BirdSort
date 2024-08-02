@@ -38,6 +38,7 @@ public class Bird : MonoBehaviour
 
         anim = GetComponent<Animator>();
 
+        Debug.Log("adding transform");
         //sittingPositionsHoldersobj = GameObject.FindGameObjectsWithTag("branch");
         //sittingPositionsHolders = new Transform[sittingPositionsHoldersobj.Length];
 
