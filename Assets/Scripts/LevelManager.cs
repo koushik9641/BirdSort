@@ -61,90 +61,201 @@ public class LevelManager : MonoBehaviour
         CurrentState = State.Playing;
     }
 
+
+    // New methode Done by Albert
     private void LoadLevel()
     {
-        //print("Level map"+Level.map.Count);
-        //print(Screen.height);
-        //print(Screen.width);
-        numberofbrunches =Level.map.Count;
+        numberofbrunches = Level.map.Count;
         var list = PositionsForHolders(numberofbrunches, out var width).ToList();
-        //print(width);
         _camera.orthographicSize = 0.5f * width * Screen.height / Screen.width;
-
-        //_camera.orthographicSize = 0.5f  * width * Screen.width / Screen.height;
-
-        
 
         var levelMap = Level.LiquidDataMap;
         var hasSet = new HashSet<int>();
+
         for (var i = 0; i < levelMap.Count; i++)
         {
             var levelColumn = levelMap[i];
 
-            if(i < Mathf.CeilToInt(Level.map.Count / 2f)){
-            var brunch = Instantiate(_brunchPrefab_left, list[i], Quaternion.identity);
+            // Instantiate the branch (left or right)
+            GameObject brunch;
+            if (i < Mathf.CeilToInt(Level.map.Count / 2f))
+            {
+                brunch = Instantiate(_brunchPrefab_left, list[i], Quaternion.identity);
+            }
+            else
+            {
+                brunch = Instantiate(_brunchPrefab_right, list[i], Quaternion.identity);
+            }
+
             brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = i + 1;
-                var birdsinbrnch = levelColumn.ToList();
-
             brunchlist.Add(brunch);
 
-            for(var j=0;j<birdsinbrnch.Count;j++){
-                for(var k=0;k<birdsinbrnch[j].value;k++){
-
-                
-
-                
-                var bird_intstance = Instantiate(birdprefablist[birdsinbrnch[j].groupId],brunch.transform.GetChild(0).GetChild(brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled));
-                bird_intstance.transform.GetComponent<Bird>().target=bird_intstance.transform;
-                brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled++;
-                bird_intstance.transform.GetComponent<Bird>().startisfinish=true;
-                
-
-                
-                hasSet.Add(birdsinbrnch[j].groupId);
-                }
-                  
-            }
-
-            
-            //holder.Init(levelColumn,true);
-            //_holders.Add(holder);
-            }
-            else{
-            var brunch = Instantiate(_brunchPrefab_right, list[i], Quaternion.identity);
-                brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = i + 1;
-                var birdsinbrnch = levelColumn.ToList();
-
-            brunchlist.Add(brunch);
-            
-            
-            
-
-            for(var j=0;j<birdsinbrnch.Count;j++){
-                for(var k=0;k<birdsinbrnch[j].value;k++){
-                
-                var bird_intstance = Instantiate(birdprefablist[birdsinbrnch[j].groupId],brunch.transform.GetChild(0).GetChild(brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled));
-                bird_intstance.transform.GetComponent<Bird>().target=bird_intstance.transform;
-                brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled++;
-                bird_intstance.transform.GetComponent<Bird>().startisfinish=true;
-                
-                
-                hasSet.Add(birdsinbrnch[j].groupId);
-                }
-                    
-            }
-            //holder.Init(levelColumn,true);
-            //_holders.Add(holder);
-
-            }
-            
-            
+            // Start the coroutine to instantiate birds for this branch
+            StartCoroutine(InstantiateBirdsForBranch(brunch, levelColumn, hasSet));
         }
 
-        
-       birdcontrollerscript.GetComponent<BirdsSortingController>().birdTypes=hasSet.Count;
-        
+        birdcontrollerscript.GetComponent<BirdsSortingController>().birdTypes = hasSet.Count;
     }
+
+    private IEnumerator InstantiateBirdsForBranch(GameObject brunch, IEnumerable<LiquidData> birdsinbrnch, HashSet<int> hasSet)
+    {
+        // Determine if the branch is on the left or right side
+        bool isLeftBranch = brunch.transform.position.x < 0;
+
+        foreach (var birdData in birdsinbrnch)
+        {
+            for (var k = 0; k < birdData.value; k++)
+            {
+                // Choose an off-screen position based on the branch's side
+                Vector3 offScreenPosition;
+                if (isLeftBranch)
+                {
+                    offScreenPosition = new Vector3(-Screen.width * 0.5f - 1f, brunch.transform.position.y, brunch.transform.position.z); // Slightly off-screen to the left
+                }
+                else
+                {
+                    offScreenPosition = new Vector3(Screen.width * 0.5f + 1f, brunch.transform.position.y, brunch.transform.position.z); // Slightly off-screen to the right
+                }
+
+                // Instantiate the bird off-screen
+                var birdInstance = Instantiate(birdprefablist[birdData.groupId], offScreenPosition, Quaternion.identity);
+
+                // Set the bird's target position
+                birdInstance.GetComponent<Bird>().target = brunch.transform.GetChild(0).GetChild(brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().positionsFilled);
+
+                // Increase the filled positions
+                brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().positionsFilled++;
+
+                birdInstance.GetComponent<Bird>().startisfinish = true;
+
+                hasSet.Add(birdData.groupId);
+
+                // Adjust the starting position slightly based on branch side
+                Vector3 endPos = birdInstance.GetComponent<Bird>().target.position;
+                Vector3 startPos = endPos + new Vector3(isLeftBranch ? -1f : 1f, 4f, 0); // Adjust start position slightly above the branch
+
+                // Start moving the bird to its final position
+                StartCoroutine(MoveBirdToPosition(birdInstance.transform, startPos, endPos));
+            }
+        }
+
+        yield return null; // Ensure the coroutine completes successfully
+    }
+
+    private IEnumerator MoveBirdToPosition(Transform bird, Vector3 startPos, Vector3 endPos)
+    {
+        // Define the journey time to control the speed of the bird
+        float journeyTime = 2f;  // Adjust this value for desired speed
+        float elapsedTime = 0f;
+
+        // Smoothly move the bird from start position to end position
+        while (elapsedTime < journeyTime)
+        {
+            float t = elapsedTime / journeyTime;
+
+            // Use a smooth step function to ease the bird's movement (ease-in-out effect)
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            // Move the bird along a parabolic path
+            Vector3 smoothPos = Vector3.Lerp(startPos, endPos, smoothT)
+                                + new Vector3(0, Mathf.Sin(smoothT * Mathf.PI) * 2f, 0); // Adjust the 2f for vertical arc height
+
+            bird.position = smoothPos;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the bird is exactly at the final position
+        bird.position = endPos;
+    }
+
+
+
+    //private void LoadLevel()
+    //{
+    //    //print("Level map"+Level.map.Count);
+    //    //print(Screen.height);
+    //    //print(Screen.width);
+    //    numberofbrunches =Level.map.Count;
+    //    var list = PositionsForHolders(numberofbrunches, out var width).ToList();
+    //    //print(width);
+    //    _camera.orthographicSize = 0.5f * width * Screen.height / Screen.width;
+
+    //    //_camera.orthographicSize = 0.5f  * width * Screen.width / Screen.height;
+
+
+
+    //    var levelMap = Level.LiquidDataMap;
+    //    var hasSet = new HashSet<int>();
+    //    for (var i = 0; i < levelMap.Count; i++)
+    //    {
+    //        var levelColumn = levelMap[i];
+
+    //        if(i < Mathf.CeilToInt(Level.map.Count / 2f)){
+    //        var brunch = Instantiate(_brunchPrefab_left, list[i], Quaternion.identity);
+    //        brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = i + 1;
+    //            var birdsinbrnch = levelColumn.ToList();
+
+    //        brunchlist.Add(brunch);
+
+    //        for(var j=0;j<birdsinbrnch.Count;j++){
+    //            for(var k=0;k<birdsinbrnch[j].value;k++){
+
+
+
+
+    //            var bird_intstance = Instantiate(birdprefablist[birdsinbrnch[j].groupId],brunch.transform.GetChild(0).GetChild(brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled));
+    //            bird_intstance.transform.GetComponent<Bird>().target=bird_intstance.transform;
+    //            brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled++;
+    //            bird_intstance.transform.GetComponent<Bird>().startisfinish=true;
+
+
+
+    //            hasSet.Add(birdsinbrnch[j].groupId);
+    //            }
+
+    //        }
+
+
+    //        //holder.Init(levelColumn,true);
+    //        //_holders.Add(holder);
+    //        }
+    //        else{
+    //        var brunch = Instantiate(_brunchPrefab_right, list[i], Quaternion.identity);
+    //            brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = i + 1;
+    //            var birdsinbrnch = levelColumn.ToList();
+
+    //        brunchlist.Add(brunch);
+
+
+
+
+    //        for(var j=0;j<birdsinbrnch.Count;j++){
+    //            for(var k=0;k<birdsinbrnch[j].value;k++){
+
+    //            var bird_intstance = Instantiate(birdprefablist[birdsinbrnch[j].groupId],brunch.transform.GetChild(0).GetChild(brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled));
+    //            bird_intstance.transform.GetComponent<Bird>().target=bird_intstance.transform;
+    //            brunch.transform.GetChild(0).transform.GetComponent<BirdSittingPositions>().positionsFilled++;
+    //            bird_intstance.transform.GetComponent<Bird>().startisfinish=true;
+
+
+    //            hasSet.Add(birdsinbrnch[j].groupId);
+    //            }
+
+    //        }
+    //        //holder.Init(levelColumn,true);
+    //        //_holders.Add(holder);
+
+    //        }
+
+
+    //    }
+
+
+    //   birdcontrollerscript.GetComponent<BirdsSortingController>().birdTypes=hasSet.Count;
+
+    //}
 
 
 
