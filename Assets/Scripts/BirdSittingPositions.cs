@@ -15,6 +15,9 @@ public class BirdSittingPositions : MonoBehaviour
     Transform lastTarget;
     public int brunchid;
     //public static List<GameObject> selectedbirds;
+
+    
+
     private void OnMouseDown()
     {
         // SoundManager.instance.Play(SoundManager.instance.clickSound);
@@ -329,6 +332,8 @@ public class BirdSittingPositions : MonoBehaviour
     }
     private void Update()
     {
+        
+
         if (available)
         {
             
@@ -372,14 +377,34 @@ public class BirdSittingPositions : MonoBehaviour
             if (sorted)
             {
                 //transform.position += Vector3.up * 0.1f;
+                // Trigger the tilt animation
+                tiltbranch();
                 StartCoroutine(FlyAfterSorted());
             }
         }
     }
 
+    public void tiltbranch()
+    {
+        Animator parentAnimator = transform.parent.GetComponent<Animator>();
+        if (parentAnimator != null)
+        {
+            parentAnimator.SetBool("tilt_now", true);
+            StartCoroutine(ResetTiltAfterDelay(parentAnimator));
+        }     
+    }
+    private IEnumerator ResetTiltAfterDelay(Animator parentAnimator)
+    {
+        yield return new WaitForSeconds(0.5f);
+        parentAnimator.SetBool("tilt_now", false);
+    }
+
     IEnumerator FlyAfterSorted()
     {
         Debug.Log("sorted All");
+        
+
+
         sorted = false;
         selected = false;
         Unselectallbrunch();
@@ -434,6 +459,7 @@ public class BirdSittingPositions : MonoBehaviour
 
     public void touchanim(GameObject selectedbird)
     {
+
         selectedbird.GetComponent<SkeletonAnimation>().AnimationName = "touching";
     }
 

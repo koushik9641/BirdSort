@@ -113,6 +113,7 @@ public class Bird : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
                 gameObject.GetComponent<SkeletonAnimation>().AnimationName = "fly";
+             
                 //anim.Play("Fly");
             }
             else if (selecting == false)
@@ -128,8 +129,6 @@ public class Bird : MonoBehaviour
 
     public void MoveToNextTarget(Transform nextTarget, bool sorted = false)
     {
-
-
 
         transform.parent.parent.GetComponent<BirdSittingPositions>().positionsFilled--;
         if (!sorted)
@@ -150,11 +149,6 @@ public class Bird : MonoBehaviour
         transform.parent.localScale = new Vector3(1, 1, 1);
         target = nextTarget;
 
-
-
-
     }
-
-
 
 }
