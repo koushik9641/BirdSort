@@ -129,14 +129,15 @@ public class Bird : MonoBehaviour
 
     public void MoveToNextTarget(Transform nextTarget, bool sorted = false)
     {
-
         transform.parent.parent.GetComponent<BirdSittingPositions>().positionsFilled--;
+
         if (!sorted)
         {
             selecting = false;
             nextTarget.parent.GetComponent<BirdSittingPositions>().positionsFilled++;
             transform.parent.parent.GetComponent<BirdSittingPositions>().selected = false;
             SoundManager.instance.Play(SoundManager.instance.birdFlySound);
+
             if (birdClass == BirdClass.bird1)
             {
                 SoundManager.instance.Play(SoundManager.instance.bigBirdSound);
@@ -146,9 +147,13 @@ public class Bird : MonoBehaviour
                 SoundManager.instance.Play(SoundManager.instance.smallBirdSound);
             }
         }
+
         transform.parent.localScale = new Vector3(1, 1, 1);
         target = nextTarget;
 
+        // Call tiltbranch when bird moves to a new target
+        transform.parent.parent.GetComponent<BirdSittingPositions>().tiltbranch();
     }
+
 
 }
