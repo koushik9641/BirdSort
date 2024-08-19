@@ -395,7 +395,7 @@ public class BirdSittingPositions : MonoBehaviour
     }
     private IEnumerator ResetTiltAfterDelay(Animator parentAnimator)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         parentAnimator.SetBool("tilt_now", false);
     }
 

@@ -32,7 +32,7 @@ public class Bird : MonoBehaviour
     int idle = Animator.StringToHash("idle");
     public BirdSittingPositions birdSittingPositions;
     public bool selecting = false;
-
+    private bool hasTilted = false;
     private void Start()
     {
 
@@ -97,34 +97,56 @@ public class Bird : MonoBehaviour
     }
     private void Update()
     {
-
         if (startisfinish == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
-            if (transform.position == target.position && selecting == false)
+
+            if (transform.position == target.position && selecting == false && !hasTilted)
             {
-                // gameObject.GetComponent<SkeletonAnimation>().
+                // Bird has reached the target
                 transform.parent = target;
                 transform.rotation = Quaternion.Euler(transform.rotation.x, target.parent.eulerAngles.y + 180f, transform.rotation.z);
 
+                // Set the animation to idle
                 gameObject.GetComponent<SkeletonAnimation>().AnimationName = "idle";
-            }
-            else if (target.position.x > transform.position.x && selecting == false)
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
-                gameObject.GetComponent<SkeletonAnimation>().AnimationName = "fly";
-             
-                //anim.Play("Fly");
-            }
-            else if (selecting == false)
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-                gameObject.GetComponent<SkeletonAnimation>().AnimationName = "fly";
-                //anim.Play("Fly");
-            }
 
+                // Call tiltbranch now that the bird is on the target branch
+                if (target != null && target.parent != null)
+                {
+                    BirdSittingPositions sittingPositions = target.parent.GetComponent<BirdSittingPositions>();
+                    if (sittingPositions != null)
+                    {
+                        sittingPositions.tiltbranch();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("BirdSittingPositions component is missing on the target's parent: " + target.parent.gameObject.name);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Target or Target's parent is null when trying to call tiltbranch.");
+                }
+
+                // Mark the tilt as done
+                hasTilted = true;
+            }
+            else if (transform.position != target.position && selecting == false)
+            {
+                // Bird is flying towards the target
+                if (target.position.x > transform.position.x)
+                {
+                    transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+                }
+
+                // Set the animation to fly only while the bird is moving
+                gameObject.GetComponent<SkeletonAnimation>().AnimationName = "fly";
+            }
         }
-
     }
 
     public void MoveToNextTarget(Transform nextTarget, bool sorted = false)
@@ -151,6 +173,11 @@ public class Bird : MonoBehaviour
         transform.parent.localScale = new Vector3(1, 1, 1);
         target = nextTarget;
 
+        // Reset the hasTilted flag when moving to a new target
+        hasTilted = false;
+
+        // Log the name of the target's parent GameObject
+        Debug.Log("Moving to target's parent: " + target.parent.gameObject.name);
         // Call tiltbranch when bird moves to a new target
         transform.parent.parent.GetComponent<BirdSittingPositions>().tiltbranch();
     }
