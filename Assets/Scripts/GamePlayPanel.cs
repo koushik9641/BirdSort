@@ -93,20 +93,21 @@ public class GamePlayPanel : ShowHidable
 
     public void OnClickSkip()
     {
+        Clickskiplevelonsuccess();
         /*if (!Advertisements.Instance.IsRewardVideoAvailable())
         {
             SharedUIManager.PopUpPanel.ShowAsInfo("Notice", "Sorry no video ads available.Check your internet connection!");
             return;
         }*/
 
-        SharedUIManager.PopUpPanel.ShowAsConfirmation("Skip Level","Do you want watch Video ads to skip this level", success =>
-        {
-            if(!success)
-                return;
+        //SharedUIManager.PopUpPanel.ShowAsConfirmation("Skip Level","Do you want watch Video ads to skip this level", success =>
+        //{
+        //    if(!success)
+        //        return;
 
-            //AdsManager.Instance.onRewarded2Pressed();
+        //    //AdsManager.Instance.onRewarded2Pressed();
           
-        });
+        //});
     }
 
 

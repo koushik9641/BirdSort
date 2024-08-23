@@ -50,6 +50,13 @@ public class LevelManager : MonoBehaviour
     public bool IsTransfer { get; set; }
 
     
+    private List<GameObject> rightBrunchList = new List<GameObject>();
+    private List<GameObject> leftBrunchList = new List<GameObject>();
+    private float rightBranchInitialX;
+    private float leftBranchInitialX;
+    private float rightBranchInitialY;
+    private float leftBranchInitialY;
+
     private void Awake()
     {
         Instance = this;
@@ -81,11 +88,21 @@ public class LevelManager : MonoBehaviour
             if (i < Mathf.CeilToInt(Level.map.Count / 2f))
             {
                 brunch = Instantiate(_brunchPrefab_left, list[i], Quaternion.identity);
+                leftBrunchList.Add(brunch);
+                leftBranchInitialX = brunch.transform.position.x;
+                leftBranchInitialY = brunch.transform.position.y;
+                Debug.Log("leftBranchInitiallasty :" + leftBranchInitialY);
+
             }
             else
             {
                 brunch = Instantiate(_brunchPrefab_right, list[i], Quaternion.identity);
+                rightBrunchList.Add(brunch);
+                rightBranchInitialX = brunch.transform.position.x;
+                rightBranchInitialY = brunch.transform.position.y;
+                Debug.Log("rightBranchInitiallasty:" + rightBranchInitialY);
             }
+          
 
             brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = i + 1;
             brunchlist.Add(brunch);
@@ -241,61 +258,45 @@ public class LevelManager : MonoBehaviour
 
     public void Addemptyholder(){
 
-        //print("Number of holder"+_holders.Count);
+        if (brunchadded < maxnumberbrunchadd)
+        {
+            numberofbrunches += 1;
 
-        if(brunchadded<maxnumberbrunchadd){
+            // Determine which side has fewer branches
+            bool isRightSide = rightBrunchList.Count <= leftBrunchList.Count;
 
-        numberofbrunches=numberofbrunches+1;
+            GameObject brunch;
+            Vector3 newPosition;
+            float newYPosition;
 
-        
-
-        //var list = PositionsForHolders(numberofbrunches, out var width).ToList();
-        //_camera.orthographicSize = 0.5f * width * Screen.height / Screen.width;           
-            
-            if(Mathf.CeilToInt(brunchlist.Count / 2f)%2 == 0)
+            if (isRightSide)
             {
-            var brunch = Instantiate(_brunchPrefab_right, brunchlist[brunchlist.Count-1].transform.position, Quaternion.identity);
-            
-            brunch.transform.position=brunch.transform.position +_minXDistanceBetweenHolders * Vector3.up;
-                brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = brunchlist.Count + 1;
-                brunchlist.Add(brunch);
-            }
-            else{
+                // Instantiate and position a branch on the right side
+                brunch = Instantiate(_brunchPrefab_right, new Vector3(rightBranchInitialX, rightBranchInitialY, 0), Quaternion.identity);
+                rightBrunchList.Add(brunch);
 
-                var brunch = Instantiate(_brunchPrefab_right, brunchlist[brunchlist.Count-1].transform.position, Quaternion.identity);
-            
-                brunch.transform.position=brunch.transform.position +_minXDistanceBetweenHolders * Vector3.up;
-                brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = brunchlist.Count + 1;
-                brunchlist.Add(brunch);
-
+                // Increment the Y position for the right side branches
+                newYPosition = rightBranchInitialY + _minXDistanceBetweenHolders;
+                rightBranchInitialY = newYPosition; // Update the initial Y value
             }
+            else
+            {
+                // Instantiate and position a branch on the left side
+                brunch = Instantiate(_brunchPrefab_left, new Vector3(leftBranchInitialX, leftBranchInitialY, 0), Quaternion.identity);
+                leftBrunchList.Add(brunch);
+
+                // Increment the Y position for the left side branches
+                newYPosition = leftBranchInitialY + _minXDistanceBetweenHolders;
+                leftBranchInitialY = newYPosition; // Update the initial Y value
+            }
+
+            // Update the branch position
+            brunch.transform.position = new Vector3(brunch.transform.position.x, newYPosition, brunch.transform.position.z);
+            brunch.transform.GetChild(0).GetComponent<BirdSittingPositions>().brunchid = brunchlist.Count + 1;
+            brunchlist.Add(brunch);
 
             brunchadded++;
-
         }
-
-           
-
-        
-
-        
-        
-          /*  //var levelColumn = levelMap[i];
-            for (var i = 0; i < _holders.Count; i++)
-        {
-            _holders[i].transform.position=list[i];
-            _holders[i].Init(Level.LiquidDataMap[0],false);
-
-
-        }
-
-        //print("Len of list"+list.Count);
-            
-            var holder = Instantiate(_holderPrefab, list[_holders.Count], Quaternion.identity);
-            holder.Init(Level.LiquidDataMap[0],false);
-            _holders.Add(holder);
-            //print("Number of holder"+_holders.Count);*/
-        
 
     }
 
