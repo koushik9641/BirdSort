@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Spine.Unity;
+using Random = UnityEngine.Random;
+using UnityEngine.UIElements;
+using System.Linq;
 
 public class BirdSittingPositions : MonoBehaviour
 {
@@ -15,8 +18,8 @@ public class BirdSittingPositions : MonoBehaviour
     Transform lastTarget;
     public int brunchid;
     //public static List<GameObject> selectedbirds;
+ 
 
-    
 
     private void OnMouseDown()
     {
@@ -459,8 +462,61 @@ public class BirdSittingPositions : MonoBehaviour
 
     public void touchanim(GameObject selectedbird)
     {
-
         selectedbird.GetComponent<SkeletonAnimation>().AnimationName = "touching";
+    }
+    private BirdSittingPositions FindBirdSittingPositionByBrunchId(int brunchid)
+    {
+        // Find all BirdSittingPositions in the scene or within a specific parent object
+        BirdSittingPositions[] allBirdPositions = FindObjectsOfType<BirdSittingPositions>();
+
+        // Iterate through all found BirdSittingPositions and return the one that matches the brunchid
+        foreach (BirdSittingPositions birdPos in allBirdPositions)
+        {
+            if (birdPos.brunchid == brunchid)
+            {
+                return birdPos;
+            }
+        }
+
+        // Return null if no matching brunchid is found
+        return null;
+    }
+
+
+    // Call this function to swap the positions when brunchid == 1
+    // Call this function to swap the positions when brunchid == 1
+    public void swapposBirds(int branchid)
+    {
+        // This method will only work for brunchid 1
+        if (branchid == brunchid)
+        {
+            // Find the children of this GameObject (assumed to be pos (1), pos (2), pos (3), and pos (4))
+            Transform pos1 = transform.Find("pos (1)");
+            Transform pos2 = transform.Find("pos (2)");
+            Transform pos3 = transform.Find("pos (3)");
+            Transform pos4 = transform.Find("pos (4)");
+
+            if (pos1 != null && pos2 != null && pos3 != null && pos4 != null)
+            {
+                // Store their positions
+                Vector3 tempPos1 = pos1.position;
+                Vector3 tempPos2 = pos2.position;
+                Vector3 tempPos3 = pos3.position;
+                Vector3 tempPos4 = pos4.position;
+
+                // Shuffle positions (example: pos1 to pos2, pos2 to pos3, etc.)
+                pos1.position = tempPos2;
+                pos2.position = tempPos3;
+                pos3.position = tempPos4;
+                pos4.position = tempPos1;
+
+                Debug.Log("Positions shuffled for brunchid 1");
+            }
+            else
+            {
+                Debug.LogError("Child positions not found!");
+            }
+        }
     }
 
 
