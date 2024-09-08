@@ -302,16 +302,17 @@ public class LevelManager : MonoBehaviour
 
     public void OnClickUndo()
     {
-       //Debug.Log("UNDO :" + _undoStack.Count);
-       //Debug.Log("State :" + CurrentState);
-        if (CurrentState != State.Playing || _undoStack.Count <= 0)
-            return;
+       Debug.Log("UNDO :" + _undoStack.Count);
+       ////Debug.Log("State :" + CurrentState);
+       // if (CurrentState != State.Playing || _undoStack.Count <= 0)
+       //     return;
 
-        var moveData = _undoStack.Pop();
-        //print(moveData.ToHolder);
-        //print(moveData.FromHolder);
-        //print(moveData.Liquid1.Value);
-        Undomove(moveData.ToHolder, moveData.FromHolder, moveData.Liquid1,moveData.Liquidvalue);
+       // var moveData = _undoStack.Pop();
+       // //print(moveData.ToHolder);
+       // //print(moveData.FromHolder);
+       // //print(moveData.Liquid1.Value);
+       // Undomove(moveData.ToHolder, moveData.FromHolder, moveData.Liquid1,moveData.Liquidvalue);
+
     }
 
 

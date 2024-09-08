@@ -18,8 +18,6 @@ public class BirdSittingPositions : MonoBehaviour
     Transform lastTarget;
     public int brunchid;
     //public static List<GameObject> selectedbirds;
- 
-
 
     private void OnMouseDown()
     {
@@ -28,7 +26,7 @@ public class BirdSittingPositions : MonoBehaviour
         //print("steps="+steps);
         if (selected)
         {
-            //print("Selected enter");
+            print("Selected enter");
             steps = 0;
 
             /*foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
@@ -51,12 +49,12 @@ public class BirdSittingPositions : MonoBehaviour
         else
         {
             selected = true;
-            //print("Selected true");
+            print("Selected true");
         }
         steps++;
         if (steps == 1 && positionsFilled > 0)
         {
-           // print("positionsFilled >0");
+            print("positionsFilled >0");
 
             // transform.GetChild(positionsFilled - 1).localScale = new Vector3(1.3f, 1.3f, 1);
 
@@ -77,64 +75,64 @@ public class BirdSittingPositions : MonoBehaviour
                 }
             }
 
-            if(positionsFilled >=2)
+            if (positionsFilled >= 2)
             {
-            if (transform.GetChild(positionsFilled - 2).childCount >= 1 && transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass != transform.GetChild(positionsFilled - 2).GetChild(0).GetComponent<Bird>().birdClass)
-            {
+                if (transform.GetChild(positionsFilled - 2).childCount >= 1 && transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass != transform.GetChild(positionsFilled - 2).GetChild(0).GetComponent<Bird>().birdClass)
+                {
                     Unselectallbirds();
                     //gameObject.transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().selecting = true;
-                //BirdsSortingController.instance.selectedbirds.Clear();  /// Changed New //
-                BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 1).GetChild(0).gameObject);
-                //selectedbirds[1].GetComponent<Bird>().selecting = true;
-                //selectedbirds[1].transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
-                //selectedbirds[1].GetComponent<SkeletonAnimation>().AnimationName = "touching";
-                foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
-                {
-                    item.GetComponent<Bird>().selecting = true;
-                    item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
-                    item.GetComponent<SkeletonAnimation>().AnimationName = "touching";
-                }
-            }
-
-            
-            
-
-            
-            if (transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 2).GetChild(0).GetComponent<Bird>().birdClass)
-            {
-                    Unselectallbirds();
-                    //BirdsSortingController.instance.selectedbirds.Clear(); /// Changed New //
-                BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 1).GetChild(0).gameObject);
-                BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 2).GetChild(0).gameObject);
-                foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
-                {
-                    item.GetComponent<Bird>().selecting = true;
-                    item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
-                    item.GetComponent<SkeletonAnimation>().AnimationName = "touching";
-                }
-
-                if(positionsFilled>=3)
-                {
-
-                if (transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 3).GetChild(0).GetComponent<Bird>().birdClass)
-                {
-                            Unselectallbirds();
-                            //BirdsSortingController.instance.selectedbirds.Clear();  /// Changed New ///
+                    //BirdsSortingController.instance.selectedbirds.Clear();  /// Changed New //
                     BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 1).GetChild(0).gameObject);
-                    BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 2).GetChild(0).gameObject);
-                    BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 3).GetChild(0).gameObject);
+                    //selectedbirds[1].GetComponent<Bird>().selecting = true;
+                    //selectedbirds[1].transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
+                    //selectedbirds[1].GetComponent<SkeletonAnimation>().AnimationName = "touching";
                     foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
                     {
-                        item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
                         item.GetComponent<Bird>().selecting = true;
+                        item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
+                        item.GetComponent<SkeletonAnimation>().AnimationName = "touching";
+                    }
+                }
+
+
+
+
+
+                if (transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 2).GetChild(0).GetComponent<Bird>().birdClass)
+                {
+                    Unselectallbirds();
+                    //BirdsSortingController.instance.selectedbirds.Clear(); /// Changed New //
+                    BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 1).GetChild(0).gameObject);
+                    BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 2).GetChild(0).gameObject);
+                    foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
+                    {
+                        item.GetComponent<Bird>().selecting = true;
+                        item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
                         item.GetComponent<SkeletonAnimation>().AnimationName = "touching";
                     }
 
-                }
+                    if (positionsFilled >= 3)
+                    {
+
+                        if (transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 3).GetChild(0).GetComponent<Bird>().birdClass)
+                        {
+                            Unselectallbirds();
+                            //BirdsSortingController.instance.selectedbirds.Clear();  /// Changed New ///
+                            BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 1).GetChild(0).gameObject);
+                            BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 2).GetChild(0).gameObject);
+                            BirdsSortingController.instance.selectedbirds.Add(transform.GetChild(positionsFilled - 3).GetChild(0).gameObject);
+                            foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
+                            {
+                                item.transform.parent.localScale = new Vector3(1.3f, 1.3f, 1);
+                                item.GetComponent<Bird>().selecting = true;
+                                item.GetComponent<SkeletonAnimation>().AnimationName = "touching";
+                            }
+
+                        }
+
+                    }
 
                 }
-
-            }
 
             }
 
@@ -208,20 +206,20 @@ public class BirdSittingPositions : MonoBehaviour
                                     Unselectallbrunch(); //---- New ----
                                                          //BirdsSortingController.instance.selectedbirds.Clear();
                                 }
-                            
+
                                 else
                                 {
 
-                                //Unselectallbirds();
-                                ite.GetComponent<Bird>().selecting = false;
-                                ite.transform.parent.localScale = new Vector3(1f, 1f, 1);
+                                    //Unselectallbirds();
+                                    ite.GetComponent<Bird>().selecting = false;
+                                    ite.transform.parent.localScale = new Vector3(1f, 1f, 1);
 
-                                Unselectallbrunch();
+                                    Unselectallbrunch();
 
 
                                 }
 
-                        }
+                            }
                             else
                             {
                                 /*foreach (GameObject itemm in BirdsSortingController.instance.selectedbirds)
@@ -311,7 +309,7 @@ public class BirdSittingPositions : MonoBehaviour
         {
 
             //print("positionsFilled == 0 2");
-            
+
             steps = 0;
             foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
             {
@@ -319,10 +317,11 @@ public class BirdSittingPositions : MonoBehaviour
                 {
                     Debug.Log("calling 2");
                     t.GetComponent<BirdSittingPositions>().selected = false;
-                    if (positionsFilled >=1 && gameObject.transform.GetChild(positionsFilled - 1).childCount>0){
-                    gameObject.transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<SkeletonAnimation>().AnimationName = "idle";
-                    //selected = false; // New
-                    Unselectallbrunch();
+                    if (positionsFilled >= 1 && gameObject.transform.GetChild(positionsFilled - 1).childCount > 0)
+                    {
+                        gameObject.transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<SkeletonAnimation>().AnimationName = "idle";
+                        //selected = false; // New
+                        Unselectallbrunch();
                     }
                 }
             }
@@ -335,11 +334,11 @@ public class BirdSittingPositions : MonoBehaviour
     }
     private void Update()
     {
-        
+
 
         if (available)
         {
-            
+
 
             if (!selected && positionsFilled != 0)
             {
@@ -360,11 +359,12 @@ public class BirdSittingPositions : MonoBehaviour
                     for (int i = 0; i < transform.childCount; i++)
                     {
                         // print(transform.GetChild(positionsFilled - 1).name);
-                        if(positionsFilled>=1 && transform.GetChild(i).childCount >0 && transform.GetChild(positionsFilled - 1).childCount>0) {
-                        if (transform.GetChild(i).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass)
+                        if (positionsFilled >= 1 && transform.GetChild(i).childCount > 0 && transform.GetChild(positionsFilled - 1).childCount > 0)
                         {
-                            matched++;
-                        }
+                            if (transform.GetChild(i).GetChild(0).GetComponent<Bird>().birdClass == transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass)
+                            {
+                                matched++;
+                            }
                         }
                     }
                 }
@@ -394,7 +394,7 @@ public class BirdSittingPositions : MonoBehaviour
         {
             parentAnimator.SetBool("tilt_now", true);
             StartCoroutine(ResetTiltAfterDelay(parentAnimator));
-        }     
+        }
     }
     private IEnumerator ResetTiltAfterDelay(Animator parentAnimator)
     {
@@ -405,7 +405,7 @@ public class BirdSittingPositions : MonoBehaviour
     IEnumerator FlyAfterSorted()
     {
         Debug.Log("sorted All");
-        
+
 
 
         sorted = false;
@@ -414,7 +414,7 @@ public class BirdSittingPositions : MonoBehaviour
         available = false;
         foreach (Transform t in transform)
         {
-            t.GetChild(0).GetComponent<Bird>().moveSpeed=30.0f;
+            t.GetChild(0).GetComponent<Bird>().moveSpeed = 30.0f;
             t.GetChild(0).GetComponent<Bird>().MoveToNextTarget(lastTarget, true);
             yield return new WaitForSeconds(0.2f);
         }
@@ -432,14 +432,15 @@ public class BirdSittingPositions : MonoBehaviour
 
     }
 
-    public void Unselectallbrunch(){
+    public void Unselectallbrunch()
+    {
 
 
         GameObject[] allbrunches = GameObject.FindGameObjectsWithTag("branch");
         foreach (GameObject brunch in allbrunches)
         {
-            brunch.GetComponent<BirdSittingPositions>().selected=false;
-            
+            brunch.GetComponent<BirdSittingPositions>().selected = false;
+
         }
     }
 
@@ -483,11 +484,10 @@ public class BirdSittingPositions : MonoBehaviour
     }
 
 
-    // Call this function to swap the positions when brunchid == 1
-    // Call this function to swap the positions when brunchid == 1
+
     public void swapposBirds(int branchid)
     {
-        // This method will only work for brunchid 1
+        // This method will only work for the specified branch
         if (branchid == brunchid)
         {
             // Find the children of this GameObject (assumed to be pos (1), pos (2), pos (3), and pos (4))
@@ -498,19 +498,40 @@ public class BirdSittingPositions : MonoBehaviour
 
             if (pos1 != null && pos2 != null && pos3 != null && pos4 != null)
             {
-                // Store their positions
-                Vector3 tempPos1 = pos1.position;
-                Vector3 tempPos2 = pos2.position;
-                Vector3 tempPos3 = pos3.position;
-                Vector3 tempPos4 = pos4.position;
+                // Create a list of all positions
+                List<Transform> positions = new List<Transform> { pos1, pos2, pos3, pos4 };
 
-                // Shuffle positions (example: pos1 to pos2, pos2 to pos3, etc.)
-                pos1.position = tempPos2;
-                pos2.position = tempPos3;
-                pos3.position = tempPos4;
-                pos4.position = tempPos1;
+                // Find the positions that currently have birds (positions with child GameObjects)
+                List<Transform> filledPositions = new List<Transform>();
+                foreach (Transform pos in positions)
+                {
+                    if (pos.childCount > 0) // If the position has any child GameObject (bird)
+                    {
+                        filledPositions.Add(pos);
+                    }
+                }
 
-                Debug.Log("Positions shuffled for brunchid 1");
+                // If there are at least 2 filled positions, shuffle them
+                if (filledPositions.Count > 1)
+                {
+                    // Perform a simple shuffle of filled positions
+                    for (int i = 0; i < filledPositions.Count; i++)
+                    {
+                        // Randomly swap this position with any other filled position
+                        int randomIndex = Random.Range(0, filledPositions.Count);
+
+                        // Swap the birds between the positions
+                        Vector3 tempPosition = filledPositions[i].position;
+                        filledPositions[i].position = filledPositions[randomIndex].position;
+                        filledPositions[randomIndex].position = tempPosition;
+                    }
+
+                    Debug.Log("Positions shuffled for brunchid " + branchid);
+                }
+                else
+                {
+                    Debug.Log("Not enough birds to shuffle.");
+                }
             }
             else
             {

@@ -29,21 +29,21 @@ public class GamePlayPanel : ShowHidable
     public void OnClickUndo()
     {
 
-
+        Clickundoonsuccess();
         /*if (!Advertisements.Instance.IsRewardVideoAvailable())
         {
             SharedUIManager.PopUpPanel.ShowAsInfo("Notice", "Sorry no video ads available.Check your internet connection!");
             return;
         }*/
 
-        SharedUIManager.PopUpPanel.ShowAsConfirmation("Undo Last Move","Do you want watch Video ads to Undo Last Move", success =>
-        {
-            if(!success)
-                return;
+        //SharedUIManager.PopUpPanel.ShowAsConfirmation("Undo Last Move","Do you want watch Video ads to Undo Last Move", success =>
+        //{
+        //    if(!success)
+        //        return;
 
-            //AdsManager.Instance.onRewarded3Pressed();
+        //    //AdsManager.Instance.onRewarded3Pressed();
           
-        });
+        //});
         
     }
 
