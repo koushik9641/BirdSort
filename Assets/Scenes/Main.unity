@@ -3414,8 +3414,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundlist:
-  - {fileID: 21300000, guid: f35743cb80aac7e489f9b6fa209ed844, type: 3}
-  - {fileID: 21300000, guid: cc796d20b8bd19445bcfb01177ab2f91, type: 3}
+  - {fileID: 21300000, guid: 1ea6b907e92608a4eadff7a20ee4386c, type: 3}
+  - {fileID: 21300000, guid: 13cdd8a29958da54786c1c0951a6209c, type: 3}
+  - {fileID: 21300000, guid: fb18f4a35685ed140a003ad2db4567a2, type: 3}
+  - {fileID: 21300000, guid: 35f529734f94b5e43b1ee11b566b065d, type: 3}
+  - {fileID: 21300000, guid: 6218d65bcd607144dae8ed159eb2045b, type: 3}
+  - {fileID: 21300000, guid: c61f8c6c27718374aac82aa255396248, type: 3}
+  - {fileID: 21300000, guid: bde7f1ee6f55cca4dbcb709395413058, type: 3}
+  - {fileID: 21300000, guid: 404cd6527a5bff24cb00f3fd7da309a9, type: 3}
+  - {fileID: 21300000, guid: b434bcadfa65e3e4b927feffc439a0c7, type: 3}
+  - {fileID: 21300000, guid: a319b58f0888f3b439150bb7d161f2f3, type: 3}
+  - {fileID: 21300000, guid: d7ea5914812fc1046acef52b497ecd23, type: 3}
+  - {fileID: 21300000, guid: c64e4d2a3ff0fdc4e8d1c51b2f2bf2b9, type: 3}
+  - {fileID: 21300000, guid: 06df30714387f904384e28d1f534c52b, type: 3}
+  - {fileID: 21300000, guid: 3246f53eb3cc13a4795259829dfb02ba, type: 3}
+  - {fileID: 21300000, guid: 9e19e50e4ff1cb04da655c3af9d12a7a, type: 3}
+  - {fileID: 21300000, guid: e25a24e8bf5864540b24ae0dcc5a1f16, type: 3}
+  - {fileID: 21300000, guid: 2a64c07f289caf54da90ba15705224c3, type: 3}
 --- !u!1 &1579617797
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,8 +16,26 @@ public class FillScreen : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         _camera = Camera.main;
 
-        if(_renderer != null)
-           _renderer.sprite= backgroundlist[UnityEngine.Random.Range(0, backgroundlist.Length)];
+        //if(_renderer != null)
+        //   _renderer.sprite= backgroundlist[UnityEngine.Random.Range(0, backgroundlist.Length)];
+
+
+        // Retrieve the stored background set name from PlayerPrefs
+        string bgsetName = PlayerPrefs.GetString("bgset", "defaultBackground"); // Use "defaultBackground" if no value is set
+
+        // Find the corresponding sprite from the backgroundlist
+        Sprite selectedSprite = Array.Find(backgroundlist, sprite => sprite.name == bgsetName);
+
+        // If a matching sprite is found, set it; otherwise, use a default sprite or handle the case appropriately
+        if (selectedSprite != null)
+        {
+            _renderer.sprite = selectedSprite;
+        }
+        else
+        {
+            Debug.LogWarning($"Sprite with name '{bgsetName}' not found in the background list.");
+            // Optionally assign a default sprite here if needed
+        }
     }
 
     // Start is called before the first frame update
