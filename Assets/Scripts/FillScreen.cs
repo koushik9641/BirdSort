@@ -21,7 +21,7 @@ public class FillScreen : MonoBehaviour
 
 
         // Retrieve the stored background set name from PlayerPrefs
-        string bgsetName = PlayerPrefs.GetString("bgset", "defaultBackground"); // Use "defaultBackground" if no value is set
+        string bgsetName = PlayerPrefs.GetString("bgset", "defaultBackgrounds"); // Use "defaultBackground" if no value is set
 
         // Find the corresponding sprite from the backgroundlist
         Sprite selectedSprite = Array.Find(backgroundlist, sprite => sprite.name == bgsetName);

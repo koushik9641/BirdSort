@@ -21,6 +21,13 @@ namespace dotmob
         {
             base.OnInit();
             Application.targetFrameRate = 60;
+
+            //Initialize Coin Value
+            // Initialize Coin Value only if it hasn't been set before
+            if (!PlayerPrefs.HasKey("coinsValue"))
+            {
+                PlayerPrefs.SetInt("coinsValue", 2000);
+            }
         }
     }
 
@@ -50,6 +57,8 @@ namespace dotmob
         {
             LoadGameData = data;
             LoadScene("Main", showLoading, loadingScreenSpeed);
+
+           
         }
 
     }

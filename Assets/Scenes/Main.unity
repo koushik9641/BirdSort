@@ -2580,6 +2580,7 @@ MonoBehaviour:
   _levelCompletePanel: {fileID: 369287655}
   _winEffect: {fileID: 4401921509108827449, guid: 45a62c75e61788145bb02c39b371cb9c,
     type: 3}
+  _coinValue: {fileID: 566095165}
 --- !u!1 &1061337775
 GameObject:
   m_ObjectHideFlags: 0

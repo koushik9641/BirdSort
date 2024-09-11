@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using dotmob;
 using UnityEngine;
+using TMPro;
 
 namespace Game
 {
@@ -12,7 +13,7 @@ namespace Game
         //[SerializeField] private TutorialPanel _tutorialPanel;
         [SerializeField] private GameObject _winEffect;
 
-
+        [SerializeField] private TextMeshProUGUI _coinValue;
         //public static bool IsFirstTime
         //{
         //    get => PrefManager.GetBool(nameof(IsFirstTime), true);
@@ -22,11 +23,14 @@ namespace Game
         private void Awake()
         {
             Instance = this;
-            
+
+            int coins = PlayerPrefs.GetInt("coinsValue");
+            _coinValue.text = coins.ToString(); // Update the text with the coin value
+
             //Advertisements.Instance.Initialize();
             //if(!Advertisements.Instance.IsBannerOnScreen())
             //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
-           
+
         }
 
         private void OnEnable()

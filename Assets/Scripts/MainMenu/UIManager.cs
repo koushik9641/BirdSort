@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace MainMenu
 {
@@ -11,8 +12,8 @@ namespace MainMenu
 
         [SerializeField] private LevelsPanel _levelsPanel;
         [SerializeField] private GameModePanel _gameModePanel;
-       
 
+        [SerializeField] private TextMeshProUGUI _coinValue;
         public GameModePanel GameModePanel => _gameModePanel;
         public LevelsPanel LevelsPanel => _levelsPanel;
 
@@ -21,6 +22,7 @@ namespace MainMenu
         {
             Instance = this;
 
+            updateCoinvalue();
             //CrossPromo.Instance.AutoShowPopupWhenReady();
 
 
@@ -30,6 +32,12 @@ namespace MainMenu
             //Advertisements.Instance.Initialize();
             //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
 
+        }
+
+        public void updateCoinvalue()
+        {
+            int coins = PlayerPrefs.GetInt("coinsValue");
+            _coinValue.text = coins.ToString();
         }
 
     }
