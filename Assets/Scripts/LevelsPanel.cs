@@ -13,6 +13,8 @@ public class LevelsPanel : ShowHidable
     [SerializeField] private ScrollRect levelscroller;
 
 
+    //public GameMode GameMode { get; private set; } = GameMode.Easy;
+
     private void SnapTo(ScrollRect scroller, int maxcompletelevel)
     {
 
@@ -60,23 +62,25 @@ public class LevelsPanel : ShowHidable
             for (var i = 0; i < levels.Count; i++)
             {
                 var level = levels[i];
-                if (_tiles.Count<=i)
+                if (_tiles.Count <= i)
                 {
-                    var levelTileUI = Instantiate(_levelTileUIPrefab,_content);
-                    levelTileUI.Clicked +=LevelTileUIOnClicked;
+                    var levelTileUI = Instantiate(_levelTileUIPrefab, _content);
+                    levelTileUI.Clicked += LevelTileUIOnClicked;
                     _tiles.Add(levelTileUI);
                 }
 
                 _tiles[i].MViewModel = new LevelTileUI.ViewModel
                 {
                     Level = level,
-                    Locked = ResourceManager.IsLevelLocked(value,level.no),
-                    Completed = ResourceManager.GetCompletedLevel(value)>=level.no
-
-
+                    Locked = ResourceManager.IsLevelLocked(value, level.no),
+                    Completed = ResourceManager.GetCompletedLevel(value) >= level.no
 
                 };
             }
+
+            // Get and log the player's current completed level
+            int completedLevel = ResourceManager.GetCompletedLevel(value);
+            Debug.Log($"Player's current completed level: {completedLevel}");
 
             SnapTo(levelscroller, ResourceManager.GetCompletedLevel(value));
 
@@ -101,5 +105,33 @@ public class LevelsPanel : ShowHidable
             Level = tileUI.MViewModel.Level,
             GameMode = GameMode
         });
+    }
+
+    public void loadlevelDirect(LevelTileUI tileUI)
+    {
+        var gameMode = GameMode;
+        int completedLevel = ResourceManager.GetCompletedLevel(GameMode); // Get the player's current completed level
+        Debug.Log($"Player's current completed level: {completedLevel}");
+
+        // Load the level directly using the completedLevel
+        //GameManager.LoadGame(new LoadGameData
+        //{
+        //    Level = new Level { no = completedLevel }, // Create a Level object using the completed level number
+        //    GameMode = GameMode
+        //});
+        GameManager.LoadGame(new LoadGameData
+        {
+            Level = ResourceManager.GetLevel(gameMode, completedLevel+1),
+            GameMode = gameMode
+        });
+    }
+
+    public LevelTileUI GetCompletedLevelTileUI()
+    {
+        int completedLevel = ResourceManager.GetCompletedLevel(GameMode);
+        Debug.Log($"Completed level: {completedLevel}");
+
+        // Find the tile for the completed level
+        return _tiles.FirstOrDefault(t => t.MViewModel.Level.no == completedLevel);
     }
 }

@@ -8,7 +8,14 @@ namespace MainMenu
         {
             var levelsPanel = UIManager.Instance.LevelsPanel;
             levelsPanel.GameMode = (GameMode)mode;
-            levelsPanel.Show();
+
+            //levelsPanel.Show();
+            // Get the completed level tile
+            LevelTileUI completedLevelTile = levelsPanel.GetCompletedLevelTileUI();
+
+            // Pass the completed level tile to loadlevelDirect
+            levelsPanel.loadlevelDirect(completedLevelTile);
+            //levelsPanel.Show();
         }
 
     }

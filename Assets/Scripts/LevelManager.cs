@@ -72,7 +72,11 @@ public class LevelManager : MonoBehaviour
     // New method Done by Albert
     private void LoadLevel()
     {
+      
+
         numberofbrunches = Level.map.Count;
+        
+
         var list = PositionsForHolders(numberofbrunches, out var width).ToList();
         _camera.orthographicSize = 0.5f * width * Screen.height / Screen.width;
 
