@@ -15,10 +15,10 @@ public class playbackgroundmusic : Singleton<playbackgroundmusic>
 
         private void PlayClip1()
     {
-        if (AudioManager.IsSoundEnable)
+/*        if (AudioManager.IsSoundEnable)
             AudioListener.pause=false;
         else
-         AudioListener.pause=true;
+         AudioListener.pause=true;*/
 
     } 
     

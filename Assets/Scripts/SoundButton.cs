@@ -11,18 +11,18 @@ public class SoundButton:MonoBehaviour,IPointerClickHandler
     private void Awake()
     {
         _button = GetComponent<Button>();
-        AudioManagerOnSoundStateChanged(AudioManager.IsSoundEnable);
+        //AudioManagerOnSoundStateChanged(AudioManager.IsSoundEnable);
         PlayClip();
     }
 
     private void OnEnable()
     {
-        AudioManager.SoundStateChanged += AudioManagerOnSoundStateChanged;
+        //AudioManager.SoundStateChanged += AudioManagerOnSoundStateChanged;
     }
 
     private void OnDisable()
     {
-        AudioManager.SoundStateChanged -= AudioManagerOnSoundStateChanged;
+        //AudioManager.SoundStateChanged -= AudioManagerOnSoundStateChanged;
     }
 
     private void AudioManagerOnSoundStateChanged(bool b)
@@ -33,17 +33,17 @@ public class SoundButton:MonoBehaviour,IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        AudioManager.IsSoundEnable = !AudioManager.IsSoundEnable;
+        //AudioManager.IsSoundEnable = !AudioManager.IsSoundEnable;
         PlayClip();
     }
 
 
     private void PlayClip()
     {
-        if (AudioManager.IsSoundEnable)
+/*        if (AudioManager.IsSoundEnable)
             AudioListener.pause=false;
         else
-         AudioListener.pause=true;
+         AudioListener.pause=true;*/
 
     }
 }

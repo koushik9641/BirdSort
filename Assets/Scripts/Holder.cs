@@ -236,11 +236,11 @@ public class Holder : MonoBehaviour
         _liquidLine.color = thisLiquid.Renderer.color;
         _liquidLine.transform.rotation = Quaternion.identity;
         
-        if(AudioManager.IsSoundEnable){
+/*        if(AudioManager.IsSoundEnable){
             _audio.clip = _liquidTransferClip;
             _audio.Play();
             _audio.volume = transferValue / 5;
-        }
+        }*/
           
         //PlayClipIfCan(_liquidTransferClip,transferValue / 5);
 
@@ -264,7 +264,7 @@ public class Holder : MonoBehaviour
         {
             thisLiquid.Value = Mathf.RoundToInt(thisLiquid.Value);
         }
-        if(AudioManager.IsSoundEnable)
+        //if(AudioManager.IsSoundEnable)
          _audio.Stop();
         _liquidLine.gameObject.SetActive(false);
         targetLiquid.Value = Mathf.RoundToInt(targetLiquid.Value);
@@ -383,11 +383,11 @@ public class Holder : MonoBehaviour
         _liquidLine.color = thisLiquid.Renderer.color;
         _liquidLine.transform.rotation = Quaternion.identity;
         
-        if(AudioManager.IsSoundEnable){
+/*        if(AudioManager.IsSoundEnable){
             _audio.clip = _liquidTransferClip;
             _audio.Play();
             _audio.volume = transferValue / 5;
-        }
+        }*/
           
         //PlayClipIfCan(_liquidTransferClip,transferValue / 5);
 
@@ -408,7 +408,7 @@ public class Holder : MonoBehaviour
         {
             thisLiquid.Value = Mathf.RoundToInt(thisLiquid.Value);
         }
-        if(AudioManager.IsSoundEnable)
+        //if(AudioManager.IsSoundEnable)
          _audio.Stop();
         _liquidLine.gameObject.SetActive(false);
         targetLiquid.Value = Mathf.RoundToInt(targetLiquid.Value);
@@ -466,7 +466,7 @@ public class Holder : MonoBehaviour
 
     private void PlayClipIfCan(AudioClip clip,float volume=0.35f)
     {
-        if(!AudioManager.IsSoundEnable || clip==null)
+        //if(!AudioManager.IsSoundEnable || clip==null)
             return;
         AudioSource.PlayClipAtPoint(clip,Camera.main.transform.position,volume);
     }

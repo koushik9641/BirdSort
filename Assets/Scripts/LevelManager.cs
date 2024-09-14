@@ -482,7 +482,7 @@ public class LevelManager : MonoBehaviour
 
     private void PlayClipIfCan(AudioClip clip, float volume = 0.35f)
     {
-        if (!AudioManager.IsSoundEnable || clip == null)
+        //if (!AudioManager.IsSoundEnable || clip == null)
             return;
         AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
     }
