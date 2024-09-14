@@ -7,7 +7,7 @@ using TMPro;
 
 public class CoinManager : Singleton<CoinManager>
 {
-    public Text coins;
+    [SerializeField] private TextMeshProUGUI _coinValue;
     public GameObject RewardPanel;
     public GameObject DoubleCoin;
     private int amount;
@@ -17,7 +17,7 @@ public class CoinManager : Singleton<CoinManager>
 
     void Start()
     {
-        coins.text = PlayerPrefs.GetInt("Coins").ToString();
+        _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
     }
 
     public void FreeCoinPanel2()
@@ -32,7 +32,7 @@ public class CoinManager : Singleton<CoinManager>
     public void AddCoins()
     {
             PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10);
-            coins.text = PlayerPrefs.GetInt("Coins").ToString();
+            _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
             Debug.Log("AddCoins....");  
     }
 
@@ -41,14 +41,14 @@ public class CoinManager : Singleton<CoinManager>
         //AdsManager.Instance.ShowReward(() =>
         //{
             PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10);
-            coins.text = PlayerPrefs.GetInt("Coins").ToString();
+            _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
             Debug.Log("AddCoins....");
         //});
     }
 
     public void CoinUpdate()
     {
-        coins.text = PlayerPrefs.GetInt("Coins").ToString();
+        _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
     }
 
     public void AddCoins200()
@@ -123,7 +123,7 @@ public class CoinManager : Singleton<CoinManager>
 
         PlayerPrefs.SetInt("Coins", rewardsCount);
         PlayerPrefs.Save();
-        coins.text = PlayerPrefs.GetInt("Coins").ToString();
+        _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
 
     }
 
@@ -131,7 +131,7 @@ public class CoinManager : Singleton<CoinManager>
     {
         PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + amount);
         PlayerPrefs.Save();
-        coins.text = PlayerPrefs.GetInt("Coins").ToString();
+        _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
     }
 
 }
