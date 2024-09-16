@@ -13,7 +13,7 @@ public class LevelsPanel : ShowHidable
     [SerializeField] private ScrollRect levelscroller;
 
 
-    //public GameMode GameMode { get; private set; } = GameMode.Easy;
+   
 
     private void SnapTo(ScrollRect scroller, int maxcompletelevel)
     {
@@ -126,10 +126,15 @@ public class LevelsPanel : ShowHidable
         });
     }
 
+    public int levelnoUI()
+    {
+        int Levelno = ResourceManager.GetCompletedLevel(GameMode);
+        return Levelno;
+    }
     public LevelTileUI GetCompletedLevelTileUI()
     {
         int completedLevel = ResourceManager.GetCompletedLevel(GameMode);
-        Debug.Log($"Completed level: {completedLevel}");
+        //Debug.Log($"Completed level for ui manager: {completedLevel}");
 
         // Find the tile for the completed level
         return _tiles.FirstOrDefault(t => t.MViewModel.Level.no == completedLevel);

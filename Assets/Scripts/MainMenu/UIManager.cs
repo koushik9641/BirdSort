@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
+using System.Linq;
 
 namespace MainMenu
 {
@@ -18,11 +20,16 @@ namespace MainMenu
         public LevelsPanel LevelsPanel => _levelsPanel;
 
 
+        [SerializeField] private TextMeshProUGUI levelno;
+
         private void Awake()
         {
             Instance = this;
 
             updateCoinvalue();
+                    
+            //levelno.text = "Play " + (completedLevel + 1).ToString();
+
             //CrossPromo.Instance.AutoShowPopupWhenReady();
 
 
@@ -33,6 +40,17 @@ namespace MainMenu
             //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
 
         }
+        private void Start()
+        {
+            var levelsPanel = UIManager.Instance.LevelsPanel;
+            levelsPanel.GameMode = (GameMode)4;
+
+            int completedLevelTile = levelsPanel.levelnoUI();
+ 
+            levelno.text = "Play " + (completedLevelTile + 1).ToString();
+
+        }
+
 
         public void updateCoinvalue()
         {
@@ -40,5 +58,7 @@ namespace MainMenu
             _coinValue.text = coins.ToString();
         }
 
+
+       
     }
 }
