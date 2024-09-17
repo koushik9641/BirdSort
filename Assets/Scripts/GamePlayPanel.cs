@@ -11,6 +11,7 @@ public class GamePlayPanel : ShowHidable
     [SerializeField] private Text _lvlTxt;
     [SerializeField] private GameObject txtTutorial;
     [SerializeField] private GameObject swapPositionInfo;
+    [SerializeField] private GameObject dialogPanelswap;
     private void Start()
     {
         _lvlTxt.text = $" LEVEL  {LevelManager.Instance.Level.no}";
@@ -135,15 +136,16 @@ public class GamePlayPanel : ShowHidable
     public void swapPosBirds()
     {
         LevelManager.Instance.IsShuffleOn = true;
+        dialogPanelswap.gameObject.SetActive(true);
         // Get all instances of BirdSittingPositions in the scene
         // BirdSittingPositions[] allPositions = FindObjectsOfType<BirdSittingPositions>();
 
         // foreach (BirdSittingPositions position in allPositions)
         // {
         //     Debug.Log("brunch id:" + position.brunchid);
-       
+
         //     position.swapposBirds(3); // Ensure that swapPosBirds is a public method in BirdSittingPositions
-           
+
         // }
     }
 }

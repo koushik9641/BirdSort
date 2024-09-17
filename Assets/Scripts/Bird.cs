@@ -178,8 +178,24 @@ public class Bird : MonoBehaviour
 
         // Log the name of the target's parent GameObject
         Debug.Log("Moving to target's parent: " + target.parent.gameObject.name);
+
         // Call tiltbranch when bird moves to a new target
         transform.parent.parent.GetComponent<BirdSittingPositions>().tiltbranch();
+
+
+        // Find the GameObject by its name
+        GameObject dialogSwap = GameObject.Find("dialogswap");
+
+        // Check if the GameObject is found and active in the hierarchy
+        if (dialogSwap != null && dialogSwap.activeInHierarchy)
+        {
+            // Disable the GameObject
+            dialogSwap.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("GameObject 'dialogswap' not found or already inactive.");
+        }
     }
 
 

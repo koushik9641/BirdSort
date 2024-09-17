@@ -2460,6 +2460,7 @@ MonoBehaviour:
   _lvlTxt: {fileID: 4981004}
   txtTutorial: {fileID: 1918731292}
   swapPositionInfo: {fileID: 0}
+  dialogPanelswap: {fileID: 1845119689}
 --- !u!1 &1026396220
 GameObject:
   m_ObjectHideFlags: 0
@@ -2865,6 +2866,7 @@ MonoBehaviour:
   birdcontrollerscript: {fileID: 1995458703}
   numberofbrunches: 0
   maxnumberbrunchadd: 2
+  IsShuffleOn: 0
 --- !u!1 &1209911624
 GameObject:
   m_ObjectHideFlags: 0
@@ -4039,7 +4041,7 @@ GameObject:
   - component: {fileID: 1845119692}
   - component: {fileID: 1845119691}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: dialogswap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
