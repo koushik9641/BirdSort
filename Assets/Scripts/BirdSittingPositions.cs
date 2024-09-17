@@ -24,6 +24,12 @@ public class BirdSittingPositions : MonoBehaviour
         // SoundManager.instance.Play(SoundManager.instance.clickSound);
         //print("selected="+selected);
         //print("steps="+steps);
+        if(LevelManager.Instance.IsShuffleOn)
+        {
+            ShuffleBirds();
+            LevelManager.Instance.IsShuffleOn = false;
+            return;
+        }
         if (selected)
         {
             print("Selected enter");
@@ -195,12 +201,16 @@ public class BirdSittingPositions : MonoBehaviour
                     if (transform.GetChild(positionsFilled - 1).GetChild(0).GetComponent<Bird>().birdClass == BirdsSortingController.instance.selectedbirds[0].GetComponent<Bird>().birdClass)
                     {
                         Debug.Log("counting2");
+                        List<Bird> movedBirds = new();
+                        List<Transform> movedFroms = new();
                         foreach (GameObject ite in BirdsSortingController.instance.selectedbirds)
                         {
                             if (positionsFilled != transform.childCount)
                             {
                                 if (ite.transform.parent.gameObject.transform.parent.GetComponent<BirdSittingPositions>().brunchid != transform.GetComponent<BirdSittingPositions>().brunchid)
                                 {
+                                    movedBirds.Add(ite.GetComponent<Bird>());
+                                    movedFroms.Add(ite.GetComponent<Bird>().target);
                                     ite.GetComponent<Bird>().MoveToNextTarget(transform.GetChild(positionsFilled));
                                     //selected = false;
                                     Unselectallbrunch(); //---- New ----
@@ -236,6 +246,10 @@ public class BirdSittingPositions : MonoBehaviour
                             }
 
 
+                        }
+                        if(movedBirds.Count>0)
+                        {
+                            LevelManager.Instance.RecordMove(movedBirds,movedFroms);
                         }
 
                         //positionsFilled++;
@@ -279,8 +293,12 @@ public class BirdSittingPositions : MonoBehaviour
                 int i = 0;
                 foreach (GameObject item in BirdsSortingController.instance.selectedbirds)
                 {
+                    var movedBirds = new List<Bird>();
+                    List<Transform> movedFroms = new();
                     if (item.transform.parent.gameObject.transform.parent.GetComponent<BirdSittingPositions>().brunchid != transform.GetComponent<BirdSittingPositions>().brunchid)
                     {
+                        movedBirds.Add(item.GetComponent<Bird>());
+                        movedFroms.Add(item.GetComponent<Bird>().target);
                         item.GetComponent<Bird>().MoveToNextTarget(transform.GetChild(positionsFilled));
                         selected = false;
                         Unselectallbrunch(); //----New ---
@@ -298,10 +316,15 @@ public class BirdSittingPositions : MonoBehaviour
 
                     }
                     i++;
+                    if(movedBirds.Count>0)
+                    {
+                        LevelManager.Instance.RecordMove(movedBirds,movedFroms);
+                    }
                 }
                 i = 0;
                 //birdSelected.GetComponent<Bird>().MoveToNextTarget(transform.GetChild(positionsFilled));
             }
+
             steps = 0;
         }
 
@@ -483,7 +506,30 @@ public class BirdSittingPositions : MonoBehaviour
         return null;
     }
 
-
+    private void ShuffleBirds()
+    {
+        var birds = transform.GetComponentsInChildren<Bird>();
+        if(birds.Length <= 1)
+        {
+            Debug.LogError("Not enough birds to shuffle");
+            return;
+        }
+        var poses = birds.Select(bird=> bird.transform.parent).ToArray();
+        var shuffled = poses.ToArray();
+        int maxItrations = 50;
+        for(int i=0; i<maxItrations; i++ )
+        {
+            shuffled.Shuffle();
+            if(!poses.SequenceEqual(shuffled))
+            {
+                break;
+            }
+        }
+        for(int i=0; i<birds.Length;i++)
+        {
+            birds[i].MoveToNextTarget(shuffled[i]);
+        }
+    }
 
     public void swapposBirds(int branchid)
     {

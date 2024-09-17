@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour
 
     public bool IsTransfer { get; set; }
 
+    public bool IsShuffleOn = false;
     
     private List<GameObject> rightBrunchList = new List<GameObject>();
     private List<GameObject> leftBrunchList = new List<GameObject>();
@@ -59,6 +60,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        IsShuffleOn = false;
         Instance = this;
         var loadGameData = GameManager.LoadGameData;
         GameMode = loadGameData.GameMode;
@@ -307,15 +309,23 @@ public class LevelManager : MonoBehaviour
     public void OnClickUndo()
     {
        Debug.Log("UNDO :" + _undoStack.Count);
-       ////Debug.Log("State :" + CurrentState);
-       // if (CurrentState != State.Playing || _undoStack.Count <= 0)
-       //     return;
+       //Debug.Log("State :" + CurrentState);
+       if (CurrentState != State.Playing || _undoStack.Count <= 0)
+           return;
 
-       // var moveData = _undoStack.Pop();
-       // //print(moveData.ToHolder);
-       // //print(moveData.FromHolder);
-       // //print(moveData.Liquid1.Value);
-       // Undomove(moveData.ToHolder, moveData.FromHolder, moveData.Liquid1,moveData.Liquidvalue);
+       var moveData = _undoStack.Pop();
+       for(int i=0; i<moveData.Birds.Count; i++)
+       {
+            moveData.Birds[i].MoveToNextTarget(moveData.From[i]);
+        
+       }
+    //    foreach(var bird in moveData.Birds)
+    //    {
+    //    }
+       //print(moveData.ToHolder);
+       //print(moveData.FromHolder);
+       //print(moveData.Liquid1.Value);
+    //    Undomove(moveData.ToHolder, moveData.FromHolder, moveData.Liquid1,moveData.Liquidvalue);
 
     }
 
@@ -365,15 +375,15 @@ public class LevelManager : MonoBehaviour
             {
                 
 
-                _undoStack.Push(new MoveData
-                {
-                    FromHolder = pendingHolder,
-                    ToHolder = holder,
-                    Liquid1 = pendingHolder.TopLiquid,
-                    Liquidvalue = pendingHolder.TopLiquid.Value
+                // _undoStack.Push(new MoveData
+                // {
+                //     FromHolder = pendingHolder,
+                //     ToHolder = holder,
+                //     Liquid1 = pendingHolder.TopLiquid,
+                //     Liquidvalue = pendingHolder.TopLiquid.Value
                     
 
-                });
+                // });
                 //print(_undoStack.All(l=>Liquid));
                 //MoveBallFromOneToAnother(pendingHolder, holder);
 
@@ -576,6 +586,14 @@ public class LevelManager : MonoBehaviour
         
         return list;
     }
+    public void RecordMove(List<Bird> birds, List<Transform> from)
+    {
+        _undoStack.Push(new MoveData()
+        {
+            Birds = birds,
+            From = from,
+        });
+    }
 
 
     public enum State
@@ -587,10 +605,10 @@ public class LevelManager : MonoBehaviour
 
     public struct MoveData
     {
-        public Holder FromHolder { get; set; }
-        public Holder ToHolder { get; set; }
-        public Liquid Liquid1 { get; set; }
-        public float Liquidvalue { get; set; }
+        public List<Bird> Birds { get; set; }
+        public List<Transform> From { get; set; }
+        // public Liquid Liquid1 { get; set; }
+        // public float Liquidvalue { get; set; }
     }
 }
 

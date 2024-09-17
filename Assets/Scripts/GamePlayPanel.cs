@@ -134,15 +134,16 @@ public class GamePlayPanel : ShowHidable
     
     public void swapPosBirds()
     {
+        LevelManager.Instance.IsShuffleOn = true;
         // Get all instances of BirdSittingPositions in the scene
-        BirdSittingPositions[] allPositions = FindObjectsOfType<BirdSittingPositions>();
+        // BirdSittingPositions[] allPositions = FindObjectsOfType<BirdSittingPositions>();
 
-        foreach (BirdSittingPositions position in allPositions)
-        {
-            Debug.Log("brunch id:" + position.brunchid);
+        // foreach (BirdSittingPositions position in allPositions)
+        // {
+        //     Debug.Log("brunch id:" + position.brunchid);
        
-            position.swapposBirds(3); // Ensure that swapPosBirds is a public method in BirdSittingPositions
+        //     position.swapposBirds(3); // Ensure that swapPosBirds is a public method in BirdSittingPositions
            
-        }
+        // }
     }
 }
