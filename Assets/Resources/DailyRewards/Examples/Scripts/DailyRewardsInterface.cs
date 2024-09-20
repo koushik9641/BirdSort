@@ -75,7 +75,9 @@ namespace NiobiumStudios
             {
 				var keepOpen = dailyRewards.keepOpen;
                 panelReward.SetActive(false);
-                canvas.gameObject.SetActive(keepOpen);
+                canvas.gameObject.SetActive(false);
+
+                //canvas.gameObject.SetActive(keepOpen);
             });
 
             buttonClose.onClick.AddListener(() =>

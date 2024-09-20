@@ -23,18 +23,19 @@ namespace Game
         private void Awake()
         {
             Instance = this;
+            _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
 
-            int coins = PlayerPrefs.GetInt("coinsValue");
-            _coinValue.text = coins.ToString(); // Update the text with the coin value
+            //int coins = PlayerPrefs.GetInt("Coins").ToString();
+            //_coinValue.text = coins.ToString(); // Update the text with the coin value
 
             //Advertisements.Instance.Initialize();
             //if(!Advertisements.Instance.IsBannerOnScreen())
             //Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM);
-
         }
 
         private void OnEnable()
         {
+            CoinManager.Instance.CoinUpdate();
             LevelManager.LevelCompleted += LevelManagerOnLevelCompleted;
         }
 

@@ -56,7 +56,7 @@ public class Demo : MonoBehaviour
                 amount = wheelPiece.Amount;
                 anountCoins.text = amount.ToString();
                 CoinManager.Instance.CoinUpdate();
-                //uiSpinButton.interactable = true;
+                uiSpinButton.interactable = true;
                 uiSpinButtonText.text = "Spin";
                 CoinManager.Instance.DoubleCoinPanel();
             });
@@ -71,17 +71,17 @@ public class Demo : MonoBehaviour
 
     public void DoubleCoins()
     {
-        //AdsManager.Instance.ShowReward(() => {
+        AdsManager.Instance.ShowReward(() => {
             PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + amount);
             CoinManager.Instance.CoinUpdate();
-        //});
+        });
     }
 
 
     public void FreeSpin()
     {
-        //AdsManager.Instance.ShowReward(() =>
-       // {
+        AdsManager.Instance.ShowReward(() =>
+        {
             freeButtom.SetActive(false);
             pickerWheel.Spin();
             pickerWheel.OnSpinEnd(wheelPiece =>
@@ -97,7 +97,7 @@ public class Demo : MonoBehaviour
                 uiSpinButtonText.text = "Spin";
                 CoinManager.Instance.DoubleCoinPanel();
             });
-        //});
+        });
     }
 
     void Update()

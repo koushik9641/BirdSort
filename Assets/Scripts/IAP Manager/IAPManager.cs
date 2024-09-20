@@ -21,6 +21,13 @@ public class IAPManager : MonoBehaviour, IStoreListener
         InitializePurchasing();
     }
 
+    public void FreeCoins()
+    {
+        PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 100);
+        CoinManager.Instance.CoinUpdate();
+        Debug.Log("AddCoins....");
+    }
+
     private void InitializePurchasing()
     {
         if (IsInitialized())
@@ -113,31 +120,49 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             // Handle consumable1 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable1'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else if (string.Equals(args.purchasedProduct.definition.id, BirdProductID2, System.StringComparison.Ordinal))
         {
             // Handle consumable2 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable2'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 25000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else if (string.Equals(args.purchasedProduct.definition.id, BirdProductID3, System.StringComparison.Ordinal))
         {
             // Handle consumable2 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable3'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 50000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else if (string.Equals(args.purchasedProduct.definition.id, BirdProductID4, System.StringComparison.Ordinal))
         {
             // Handle consumable2 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable4'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 150000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else if (string.Equals(args.purchasedProduct.definition.id, BirdProductID5, System.StringComparison.Ordinal))
         {
             // Handle consumable2 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable5'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 250000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else if (string.Equals(args.purchasedProduct.definition.id, BirdProductID6, System.StringComparison.Ordinal))
         {
             // Handle consumable2 purchase here
             Debug.Log("ProcessPurchase: PASS. Product purchased: 'consumable6'");
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 500000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
         }
         else
         {

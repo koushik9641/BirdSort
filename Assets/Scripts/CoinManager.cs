@@ -31,9 +31,9 @@ public class CoinManager : Singleton<CoinManager>
     // Update is called once per frame
     public void AddCoins()
     {
-            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10);
-            _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
-            Debug.Log("AddCoins....");  
+        PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10);
+        _coinValue.text = PlayerPrefs.GetInt("Coins").ToString();
+        Debug.Log("AddCoins....");  
     }
 
     public void SpinCoins()

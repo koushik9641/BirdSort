@@ -38,6 +38,9 @@ public class LevelCompletePanel : ShowHidable
 
     public void OnClickContinue()
     {
+        PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 10);
+        CoinManager.Instance.CoinUpdate();
+        Debug.Log("AddCoins....");
         UIManager.Instance.LoadNextLevel();
     }
 

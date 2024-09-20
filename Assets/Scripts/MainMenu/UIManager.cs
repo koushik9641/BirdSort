@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 using System.Linq;
 
 namespace MainMenu
@@ -47,7 +46,7 @@ namespace MainMenu
 
             int completedLevelTile = levelsPanel.levelnoUI();
  
-            levelno.text = "Play " + (completedLevelTile + 1).ToString();
+            levelno.text = "Level " + (completedLevelTile + 1).ToString();
 
         }
 

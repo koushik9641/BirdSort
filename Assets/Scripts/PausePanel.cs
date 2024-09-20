@@ -19,46 +19,18 @@ public class PausePanel : ShowHidable
         _removeAdsBtn.gameObject.SetActive(false);
 #endif
 
-//_removeAdsBtn.gameObject.SetActive(ResourceManager.EnableAds);
+        //_removeAdsBtn.gameObject.SetActive(ResourceManager.EnableAds);
 
 
 
 
-        _restorePurchaseBtn.gameObject.SetActive(Application.platform == RuntimePlatform.IPhonePlayer
+/*        _restorePurchaseBtn.gameObject.SetActive(true);
 #if IN_APP
                              && ResourceManager.AbleToRestore
 #endif
-        );
+        );*/
     }
 
-
-#if IN_APP
-    private void OnEnable()
-    {
-        ResourceManager.ProductRestored += ResourceManagerOnProductRestored;
-        ResourceManager.ProductPurchased += ResourceManagerOnProductPurchased;
-    }
-
-
-
-    private void OnDisable()
-    {
-        ResourceManager.ProductRestored -= ResourceManagerOnProductRestored;
-        ResourceManager.ProductPurchased -= ResourceManagerOnProductPurchased;
-    }
-
-    private void ResourceManagerOnProductPurchased(string productId)
-    {
-        gameObject.SetActive(ResourceManager.EnableAds);
-    }
-
-
-    private void ResourceManagerOnProductRestored(bool b)
-    {
-        gameObject.SetActive(ResourceManager.AbleToRestore);
-    }
-
-#endif
 
 
     public void OnClickCloseButton()
