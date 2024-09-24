@@ -14,7 +14,7 @@ public class bgset : MonoBehaviour
     }
     public void buyBgset()
     {
-        int currentCoins = PlayerPrefs.GetInt("coinsValue", 2000);
+        int currentCoins = PlayerPrefs.GetInt("Coins");
 
         if (int.TryParse(coinValue.text, out int cost))
         {
@@ -33,7 +33,7 @@ public class bgset : MonoBehaviour
 
                 // Proceed with the purchase
                 currentCoins -= cost;
-                PlayerPrefs.SetInt("coinsValue", currentCoins);
+                PlayerPrefs.SetInt("Coins", currentCoins);
                 UIManager.Instance.updateCoinvalue();
 
                 // Update the list of purchased background sets

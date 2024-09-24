@@ -23,9 +23,13 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public void FreeCoins()
     {
-        PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 100);
-        CoinManager.Instance.CoinUpdate();
-        Debug.Log("AddCoins....");
+        AdsManager.Instance.ShowReward(() =>
+        {
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1000);
+            CoinManager.Instance.CoinUpdate();
+            Debug.Log("AddCoins....");
+        });
+
     }
 
     private void InitializePurchasing()

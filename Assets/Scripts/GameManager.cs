@@ -24,9 +24,9 @@ namespace dotmob
 
             //Initialize Coin Value
             // Initialize Coin Value only if it hasn't been set before
-            if (!PlayerPrefs.HasKey("coinsValue"))
+            if (!PlayerPrefs.HasKey("coins"))
             {
-                PlayerPrefs.SetInt("coinsValue", 2000);
+                PlayerPrefs.SetInt("coins", 500);
             }
         }
     }
